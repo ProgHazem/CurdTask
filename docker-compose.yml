@@ -1,0 +1,77 @@
+version: "3"
+services:
+  task:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: task-app
+    ports:
+      - "9000:9000"
+    volumes:
+      - .:/var/www/html
+      - ./docker/www.conf:/usr/local/etc/php-fpm.d/docker.conf
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=mysql_db
+      - DB_DATABASE=task_app
+      - DB_USERNAME=root
+      - DB_PASSWORD=w6lEry6zSZJ3FDCD
+      - REDIS_HOST=redis
+    depends_on:
+      - redis
+      - mysql_db
+    networks:
+      - task_app
+    command: >
+      sh -c "
+      until mysql -hmysql_db -uroot -pw6lEry6zSZJ3FDCD -e 'CREATE DATABASE IF NOT EXISTS task_app'; do
+        echo 'Waiting for mysql...';
+        sleep 2;
+      done;
+      php artisan migrate && php-fpm
+      "
+
+  mysql_db:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=w6lEry6zSZJ3FDCD
+      - MYSQL_DATABASE=task_app
+      - MYSQL_USER=task
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - task_app
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "--silent"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --bind 127.0.0.1
+    networks:
+      - task_app
+
+  nginx:
+    image: nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - task
+    volumes_from:
+      - task
+    networks:
+      - task_app
+
+volumes:
+  mysql-data:
+
+networks:
+  task_app:
