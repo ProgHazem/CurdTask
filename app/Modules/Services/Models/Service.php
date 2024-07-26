@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Modules\Customers\Models;
+namespace App\Modules\Services\Models;
 
-use App\Modules\Services\Models\Service;
+use App\Modules\Customers\Models\Customer;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 
-class Customer extends Model
+class Service extends Model
 {
     use SoftDeletes;
 
 
-    protected $table = 'customers';
+    protected $table = 'services';
 
     /**
      * The attributes that are mass assignable.
@@ -23,9 +23,8 @@ class Customer extends Model
      */
     protected $fillable = [
         'id',
-        'email',
-        'first_name',
-        'last_name'
+        'name',
+        'customer_id',
     ];
 
     /**
@@ -79,10 +78,10 @@ class Customer extends Model
     }
 
     /**
-     * The services that belong to the customer.
+     * The customer that belong to the service.
      */
-    public function services()
+    public function customer()
     {
-        return $this->hasMany(Service::class, 'customer_id');
+        return $this->belongsTo(Customer::class, 'service_id');
     }
 }

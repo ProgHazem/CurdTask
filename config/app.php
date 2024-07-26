@@ -173,7 +173,10 @@ return [
         App\Modules\Auth\Providers\AuthRouteServiceProvider::class,
         App\Modules\Customers\Providers\CustomerRouteServiceProvider::class,
         App\Modules\Customers\Providers\CustomerServiceProvider::class,
-
+        App\Modules\Services\Providers\ServiceRouteServiceProvider::class,
+        App\Modules\Services\Providers\ServiceServiceProvider::class,
+        App\Modules\LookUps\Providers\LookUpsRouteServiceProvider::class,
+        App\Modules\LookUps\Providers\LookUpsServiceProvider::class,
     ])->toArray(),
 
     /*

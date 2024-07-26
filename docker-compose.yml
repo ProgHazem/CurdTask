@@ -28,7 +28,7 @@ services:
         echo 'Waiting for mysql...';
         sleep 2;
       done;
-      php artisan migrate && php-fpm
+      php artisan migrate --seed && php-fpm
       "
 
   mysql_db:
