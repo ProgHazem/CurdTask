@@ -171,6 +171,9 @@ return [
         PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
         App\Modules\Auth\Providers\AuthRouteServiceProvider::class,
         App\Modules\Auth\Providers\AuthRouteServiceProvider::class,
+        App\Modules\Customers\Providers\CustomerRouteServiceProvider::class,
+        App\Modules\Customers\Providers\CustomerServiceProvider::class,
+
     ])->toArray(),
 
     /*

@@ -16,16 +16,9 @@ class LogoutController extends Controller
      *     path="/api/v1/auth/logout",
      *     summary="Logout Admin",
      *     tags={"Authentication"},
-     *     @OA\Parameter(
-     *         name="Authorization",
-     *         in="header",
-     *         description="Bearer token for authentication",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string",
-     *             example="Bearer your_access_token_here"
-     *         )
-     *     ),
+     *     security={
+     *        {"bearerAuth": {}}
+     *     },
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
