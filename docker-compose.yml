@@ -53,7 +53,6 @@ services:
     image: redis
     ports:
       - "6379:6379"
-    command: redis-server --bind 127.0.0.1
     networks:
       - task_app
 

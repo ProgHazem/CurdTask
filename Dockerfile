@@ -29,7 +29,9 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp --with-xpm \
     && docker-php-ext-install -j$(nproc) gd zip mysqli pdo pdo_mysql \
     && pecl install xdebug \
+    && pecl install redis \
     && docker-php-ext-enable xdebug \
+    && docker-php-ext-enable redis \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Composer globally
